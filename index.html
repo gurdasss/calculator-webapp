@@ -10,7 +10,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
     />
     <link rel="stylesheet" href="style.css" />
-    <script src="main.js"></script>
+    <script src="main.js" defer></script>
   </head>
   <body>
     <header>
@@ -21,13 +21,22 @@
       </div>
     </header>
     <main>
-      <div class="main__container">
-        <div class="main__container__title">Expression</div>
-        
+      <div class="main__label">
+        <div class="main__label__title">Expression</div>
+        <div class="main__label__title">Result</div>
       </div>
 
       <div class="main__container">
-        <div class="main__container__title">Result</div>
+        <div class="main__container__field">
+          <textarea
+            name="foo"
+            id="foo"
+            required
+            placeholder="(+ 2 2)"
+          ></textarea>
+          <div>=</div>
+          <input type="text" name="goo" id="goo" readonly placeholder="4" />
+        </div>
       </div>
     </main>
   </body>
