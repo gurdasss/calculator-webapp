@@ -38,15 +38,39 @@ a {
   justify-content: space-evenly;
 }
 
-main {
-  flex: 2; /* 1 1 auto */
+/* main {
+  flex: 2; 
   display: flex;
   flex-direction: column;
   font-size: xx-large;
   font-style: normal;
+} */
+
+main {
+  flex: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: min-content;
+  font-size: xx-large;
+  font-style: normal;
+  overflow-y: scroll;
 }
 
-.main__container {
+.main__label {
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 2px;
+  position: sticky;
+  /* For some strange reasons this works now!! */
+  top: 0px;
+  background-color: white;
+}
+
+input {
+  text-align: center;
+}
+
+/* .main__container {
   flex: auto;
   display: flex;
   flex-direction: column;
@@ -78,4 +102,4 @@ main {
 .main__label__title {
   flex: auto;
   text-align: center;
-}
+} */
