@@ -1,9 +1,6 @@
 "use strict";
 
-import { Parser } from "./Parser.js";
-import { Lexer } from "./Lexer.js";
-
-class Evaluator {
+export class Evaluator {
   #root;
   #result;
   constructor(parser) {
@@ -26,7 +23,7 @@ class Evaluator {
       case "/":
         return (a, b) => a / b;
       default:
-        throw new Error(`Invalid operator: ${symbol}`);
+        throw new Error(`Unknown operator: ${symbol}`);
     }
   }
 
@@ -39,15 +36,3 @@ class Evaluator {
     return expression.rest.flatMap(Evaluator.#evaluate).reduce(operator);
   }
 }
-
-console.log(
-  new Evaluator(new Parser(new Lexer("(* 7 (+ 2 3) 8)"))).getResult()
-);
-// → 7 * (2 + 3) * 8 = 280
-
-console.log(
-  new Evaluator(new Parser(new Lexer("(+ 1 2 3 4 5 (* 1 2))"))).getResult()
-);
-// → 1+2+3+4+5+200 = 215
-
-console.log(new Parser(new Lexer("(+ 1 2 3 4 5 (* 1 2))")).getRoot().rest);

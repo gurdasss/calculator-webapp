@@ -1,0 +1,31 @@
+{
+  "name": "calculator-webapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:watch": "vitest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gurdasss/calculator-webapp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/gurdasss/calculator-webapp/issues"
+  },
+  "homepage": "https://github.com/gurdasss/calculator-webapp#readme",
+  "devDependencies": {
+    "@vitest/ui": "^4.0.12",
+    "vitest": "^4.0.12"
+  }
+}

@@ -8,6 +8,10 @@ export class Lexer {
     this.#sequence = this.#sequence.reverse();
   }
 
+  getSequence() {
+    return this.#sequence;
+  }
+
   #tokenization(inputStream) {
     // return if the input stream is empty
     if (!inputStream) return;
@@ -24,3 +28,5 @@ export class Lexer {
     this.#sequence.pop();
   }
 }
+
+// console.log(["(", "*", "7", "(", "+", "2", "3", ")", "8", ")"].reverse());

@@ -1,7 +1,5 @@
 "use strict";
 
-import { Lexer } from "./Lexer.js";
-
 class Expression {
   constructor(head, ...rest) {
     this.head = head;
