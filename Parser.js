@@ -9,21 +9,23 @@ class Expression {
   }
 }
 
-class Parser {
+export class Parser {
   #lexerRef;
   #root;
 
   constructor(lexer) {
     // Objects or compound types are passed by modifiable reference value
     this.#lexerRef = lexer;
-    this.#foo();
-    console.log(this.#root);
+    this.#parseExpression();
   }
 
-  #foo() {
+  getRoot() {
+    return this.#root;
+  }
+
+  #parseExpression() {
     let symbol;
     let parentStack = new Array();
-    const isDigit = (char) => /\d/.test(char);
     while ((symbol = this.#lexerRef.peek())) {
       if (symbol == "(") {
         if (this.#root) parentStack.push(this.#root);
@@ -31,20 +33,17 @@ class Parser {
         this.#lexerRef.pop();
         // assuming that the next token will be an operator
         this.#root.head = this.#lexerRef.peek();
-      } else if (isDigit(symbol)) {
-        if (!this.#root) this.#root = symbol;
-        else this.#root.rest.push(symbol);
+      } else if (/\d/.test(symbol)) {
+        if (!this.#root) this.#root = +symbol;
+        else this.#root.rest.push(+symbol);
       } else if (symbol == ")") {
         if (parentStack.length) {
           const currentRoot = this.#root;
           this.#root = parentStack.pop();
           this.#root.rest.push(currentRoot);
         }
-      }
+      } else throw new Error(`Unexpected token: ${symbol}`);
       this.#lexerRef.pop();
     }
   }
 }
-
-console.log(new Parser(new Lexer("(+ 2 2 2 (* 2 5))")));
-console.log(new Parser(new Lexer("(* 7 (+ 2 3) 8)")));
