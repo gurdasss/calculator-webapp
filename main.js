@@ -1,4 +1,7 @@
 "use strict";
+// import { printHello } from "./parser.js";
+
+let mostRecentInput = null;
 
 const setCommonInputFieldAttributes = function (
   className,
@@ -22,7 +25,22 @@ const setExpressionField = function (id, className) {
     id,
     "(+ 2 2)"
   );
-  expressionField.setAttribute("required", "");
+  expressionField.addEventListener("keypress", function (e) {
+    if (!(e.key == "Enter")) return;
+
+    const userInput = this.value.trim();
+
+    if (!userInput) {
+      this.style.borderColor = "red";
+      return;
+    }
+
+    this.style.borderColor = "green";
+    mostRecentInput = this.value;
+
+    console.log(this.value);
+    this.disabled = true;
+  });
   return expressionField;
 };
 
