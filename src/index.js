@@ -1,5 +1,4 @@
 "use strict";
-// import { printHello } from "./parser.js";
 
 let mostRecentInput = null;
 
