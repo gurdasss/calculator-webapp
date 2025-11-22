@@ -28,5 +28,3 @@ export class Lexer {
     this.#sequence.pop();
   }
 }
-
-// console.log(["(", "*", "7", "(", "+", "2", "3", ")", "8", ")"].reverse());

@@ -23,7 +23,7 @@ export class Evaluator {
       case "/":
         return (a, b) => a / b;
       default:
-        throw new Error(`Unknown operator: ${symbol}`);
+        throw new Error(`Unknown operator: ${op}`);
     }
   }
 
