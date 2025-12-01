@@ -1,65 +1,26 @@
 "use strict";
 
-let mostRecentInput = null;
+import { TerminalUI } from "./TerminalUI.js";
+import { Lexer } from "./Lexer.js";
+import { Parser } from "./Parser.js";
+import { Evaluator } from "./Evaluator.js";
 
-const setCommonInputFieldAttributes = function (
-  className,
-  id,
-  name,
-  placeholder
-) {
-  const inputField = document.createElement("input");
-  inputField.setAttribute("class", className);
-  inputField.setAttribute("placeholder", placeholder);
-  inputField.setAttribute("id", id);
-  inputField.setAttribute("name", name);
-
-  return inputField;
-};
-
-const setExpressionField = function (id, className) {
-  const expressionField = setCommonInputFieldAttributes(
-    className,
-    id,
-    id,
-    "(+ 2 2)"
-  );
-  expressionField.addEventListener("keypress", function (e) {
-    if (!(e.key == "Enter")) return;
-
-    const userInput = this.value.trim();
-
-    if (!userInput) {
-      this.style.borderColor = "red";
-      return;
-    }
-
-    this.style.borderColor = "green";
-    mostRecentInput = this.value;
-
-    console.log(this.value);
-    this.disabled = true;
-  });
-  return expressionField;
-};
-
-const setResultField = function (id, className) {
-  const resultField = setCommonInputFieldAttributes(className, id, id, "4");
-  resultField.setAttribute("readonly", "");
-
-  return resultField;
-};
-
-const mainContainer = document.querySelector("main");
-
-for (let i = 0; i < 100; ++i) {
-  const expressionField = setExpressionField(
-    `Expression ${i}`,
-    "main__expression-field"
-  );
-
-  const resultField = setResultField(`Result ${i}`, "main__result-field");
-
-  mainContainer.append(expressionField);
-  mainContainer.append(resultField);
+function evaluate(expr) {
+  return new Evaluator(new Parser(new Lexer(expr))).getResult();
 }
+
+/* Auto-instantiate after DOM is ready (defer-safe approach when script is loaded with defer) */
+document.addEventListener("DOMContentLoaded", () => {
+  try {
+    // default shell selector is '#shell' to match your HTML
+    new TerminalUI("#shell");
+    //
+    window.evaluateExpression = function (expr, callback) {
+      callback(evaluate(expr), false);
+    };
+  } catch (err) {
+    // keep failure visible in console
+    // eslint-disable-next-line no-console
+    console.error("Failed to initialize TerminalUI:", err);
+  }
+});

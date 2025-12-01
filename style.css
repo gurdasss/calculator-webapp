@@ -1,72 +1,151 @@
-@import url("https://fonts.googleapis.com/css2?family=Micro+5&display=swap");
+/* -------------------------
+       Visual tokens / variables
+       ------------------------- */
+:root {
+  --bg: #0d0d0d;
+  --text: #e5e5e5;
+  --muted: #9f9f9f;
+  --prompt: #6cff6c;
+  /* prompt color (green) */
+  --cmd: #ffd479;
+  /* user command color (yellow) */
+  --sys: #6aaefe;
+  /* result / system messages (blue) */
+  --error: #ff6b6b;
+  /* error color (red) */
+  --gap: 1rem;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    "Roboto Mono", monospace;
+  --history-limit: 500;
+  /* fallback for CSS-aware values (JS uses separate constant) */
+}
 
+/* -------------------------
+       Base page layout
+       ------------------------- */
+html,
 body {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-family: "Micro 5", system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-    sans-serif;
+  height: 100%;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--mono);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-header {
+/* Terminal container */
+.terminal {
+  box-sizing: border-box;
+  height: 100%;
   display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  gap: var(--gap);
+}
+
+/* Small header with example usage */
+.header {
+  color: var(--muted);
+  font-size: 0.95rem;
+  user-select: none;
+}
+
+/* Main scrollable shell where entries are appended */
+.shell {
+  flex: 1;
+  overflow: auto;
+  padding-right: 8px;
+  white-space: pre-wrap;
+  line-height: 1.45;
+  /* Make keyboard navigation predictable by avoiding accidental outline on container */
+  outline: none;
+}
+
+/* An interaction block: user input (transient) -> reads as command (persistent) -> result */
+.entry {
+  margin-bottom: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+/* Read-only representation of the submitted command */
+.command-line {
+  display: flex;
+  gap: 0.75rem;
   align-items: center;
-  gap: 32px;
-  height: 64px;
-  font-size: xx-large;
-  font-style: normal;
-  margin-top: 8px;
+  font-size: 1rem;
 }
 
-a {
-  text-decoration: none;
-  color: black;
+.command-line .prompt {
+  color: var(--prompt);
+  font-weight: 700;
+  user-select: none;
 }
 
-.header__title {
-  flex: auto;
-  text-align: center;
-  font-weight: bold;
-  font-size: 4rem;
+.command-line .text {
+  color: var(--cmd);
+  word-break: break-word;
 }
 
-.header__links {
-  flex: auto;
+/* Result area shown under the command */
+.result {
+  margin-left: 2.1rem;
+  /* visually align under the typed command */
+  color: var(--sys);
+  font-family: var(--mono);
+  font-size: 0.98rem;
+  white-space: pre-wrap;
+  /* allow long results to wrap */
+  word-break: break-word;
+}
+
+.result.error {
+  color: var(--error);
+}
+
+/* Active input row styling (the one you type into) */
+.input-row {
   display: flex;
-  gap: 16px;
-  justify-content: space-evenly;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 0.25rem;
 }
 
-/* main {
-  flex: 2; 
-  display: flex;
-  flex-direction: column;
-  font-size: xx-large;
-  font-style: normal;
-} */
-
-main {
-  flex: 2;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-rows: min-content;
-  font-size: xx-large;
-  font-style: normal;
-  overflow-y: scroll;
+.input-row .prompt {
+  color: var(--prompt);
+  font-weight: 700;
 }
 
-.main__label {
-  text-align: center;
-  font-weight: bold;
-  letter-spacing: 2px;
-  position: sticky;
-  /* For some strange reasons this works now!! */
-  top: 0px;
-  background-color: white;
+.input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  padding: 0.35rem 0;
+  font-size: 1rem;
+  outline: none;
+  caret-color: var(--prompt);
+  font-family: var(--mono);
+  white-space: pre;
+  /* preserve multi-space formatting */
 }
 
-input {
-  text-align: center;
+/* placeholder color */
+.input::placeholder {
+  color: rgba(229, 229, 229, 0.35);
 }
 
+/* selection highlight */
+::selection {
+  background: rgba(106, 174, 254, 0.18);
+}
+
+/* small responsive polish */
+@media (max-width: 640px) {
+  .terminal {
+    padding: 0.75rem;
+  }
+}

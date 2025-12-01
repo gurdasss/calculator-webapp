@@ -1,28 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculator</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>P-Calc</title>
+
     <!-- 1. LINK NORMALIZE.CSS FIRST -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
-    />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+    <link rel="stylesheet" href="style.css">
     <script type="module" src="./src/index.js" defer></script>
   </head>
+
   <body>
-    <header>
-      <div class="header__title"><a href="/index.html">My Calculator</a></div>
-      <div class="header__links">
-        <a href="#" target="_blank" rel="noopener noreferrer">Tutorial</a
-        ><a href="#" target="_blank" rel="noopener noreferrer"> About</a>
+    <!-- role="application" gives an assistive-technology hint this is an interactive region. -->
+    <!-- aria-label describes the purpose. -->
+    
+    <div class="terminal" role="application" aria-label="Lisp calculator terminal">
+      <div class="header">
+        Lisp Calculator — Type expressions like <span style="color:var(--prompt)">( + 1 (* 2 3) )</span>
+        — type <span style="color:var(--prompt)">/help</span> or <span style="color:var(--prompt)">/tutorial</span>
+        <span style="color:var(--muted); margin-left:1rem; font-size:0.9rem;">(Use ↑ / ↓ to browse history)</span>
       </div>
-    </header>
-    <main>
-      <div class="main__label">EXPRESSION</div>
-      <div class="main__label">RESULT</div>
-    </main>
+      <!-- 'shell' is the scrollable area where entries are added; aria-live helps screen readers notice updates -->
+      <div id="shell" class="shell" aria-live="polite"></div>
+      </div>
+
   </body>
+
 </html>
